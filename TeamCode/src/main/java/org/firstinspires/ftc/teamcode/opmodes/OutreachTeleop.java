@@ -25,8 +25,8 @@ public class OutreachTeleop extends OpMode {
     @Override
     public void loop() {
         // Tank drive logic: use gamepad joysticks to control the motors
-        double leftPower = -gamepad1.left_stick_y;  // Invert because up is negative on the joystick
-        double rightPower = -gamepad1.right_stick_y;
+        double leftPower = -gamepad1.left_stick_y * 0.5;  // Invert because up is negative on the joystick
+        double rightPower = -gamepad1.right_stick_y * 0.5;
 
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
