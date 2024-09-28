@@ -18,8 +18,8 @@ public class OutreachAuto extends LinearOpMode {
         rightMotor = hardwareMap.get(DcMotor.class, "right_drive");
 
         // Set the direction of one motor to reverse (if necessary)
-        leftMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the start button to be pressed
         waitForStart();
