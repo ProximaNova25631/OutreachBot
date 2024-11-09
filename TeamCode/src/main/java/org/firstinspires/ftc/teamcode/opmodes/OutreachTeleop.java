@@ -101,7 +101,6 @@ public class OutreachTeleop extends LinearOpMode {
                 clawServo.setPosition(0.5);
             }
             telemetry.addData("Claw Servo Position", clawServo.getPosition());
-            telemetry.addData("Claw Status", "Running");
             telemetry.update();
 
             //Arm Programming
@@ -134,7 +133,6 @@ public class OutreachTeleop extends LinearOpMode {
             }
 
             telemetry.addData("Claw Rotation Servo Position", rotationClawServo.getPosition());
-            telemetry.addData("Claw Rotation Status", "Running");
             telemetry.update();
 
             //Sliders Programming
