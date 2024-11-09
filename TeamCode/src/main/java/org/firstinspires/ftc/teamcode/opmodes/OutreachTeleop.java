@@ -1,48 +1,9 @@
-//package org.firstinspires.ftc.teamcode.opmodes;
-//
-//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-//import com.qualcomm.robotcore.hardware.DcMotor;
-//import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-//
-//@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Two-Motor Tank Drive", group = "TeleOp")
-//public class OutreachTeleop extends OpMode {
-//
-//    // Declare the two motors
-//    private DcMotor leftMotor;
-//    private DcMotor rightMotor;
-//
-//    @Override
-//    public void init() {
-//        // Initialize the motors using the hardware map
-//        leftMotor = hardwareMap.get(DcMotor.class, "left_drive");
-//        rightMotor = hardwareMap.get(DcMotor.class, "right_drive");
-//
-//        // Set the direction of one motor to reverse if necessary
-//        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-//        rightMotor.setDirection(DcMotor.Direction.FORWARD);
-//    }
-//
-//    @Override
-//    public void loop() {
-//        // Tank drive logic: use gamepad joysticks to control the motors
-//        double leftPower = -gamepad1.left_stick_y * 0.5;  // Invert because up is negative on the joystick
-//        double rightPower = -gamepad1.right_stick_y * 0.5;
-//
-//        leftMotor.setPower(leftPower);
-//        rightMotor.setPower(rightPower);
-//
-//        // Telemetry for debugging (shows the power being applied to each motor)
-//        telemetry.addData("Left Power", leftPower);
-//        telemetry.addData("Right Power", rightPower);
-//        telemetry.update();
-//    }
-//}
-
 package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class OutreachTeleop extends LinearOpMode {
@@ -55,10 +16,14 @@ public class OutreachTeleop extends LinearOpMode {
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
         DcMotor tiltMotor = hardwareMap.dcMotor.get("TiltMotor");
+        DcMotor sliderMotor = hardwareMap.dcMotor.get("SliderMotor");
+        Servo clawServo = hardwareMap.servo.get("clawServo");
         tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tiltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         int TiltUpPosition;
         int TiltDownPosition;
+        int TopPosition;
+        int BottomPosition;
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -70,8 +35,12 @@ public class OutreachTeleop extends LinearOpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         TiltUpPosition = 5;
         TiltDownPosition = -665;
+        TopPosition = 0;
+        BottomPosition = 0;
 
         waitForStart();
+
+        double tgtPower = 0;
 
         if (isStopRequested()) return;
 
@@ -120,6 +89,46 @@ public class OutreachTeleop extends LinearOpMode {
             telemetry.addData("Desired Position", desiredPosition);
 
             telemetry.update();
+
+            // check to see if we need to move the servo.
+            if(gamepad1.left_bumper) {
+                // move to 0 degrees.
+                clawServo.setPosition(0);
+            } else if (gamepad1.right_bumper) {
+                // move to 90 degrees.
+                clawServo.setPosition(0.5);
+            }
+            telemetry.addData("Servo Position", clawServo.getPosition());
+            telemetry.addData("Status", "Running");
+            telemetry.update();
+
+            if (gamepad1.y) {
+                sliderMotor.setTargetPosition(TopPosition);
+                sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                sliderMotor.setPower(0.5);
+
+            }
+
+            if (gamepad1.a) {
+                sliderMotor.setTargetPosition(BottomPosition);
+                sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                sliderMotor.setPower(0.3);
+            }
+
+            // Get the current position of the armMotor
+            double position2 = sliderMotor.getCurrentPosition();
+
+            // Get the target position of the armMotor
+            double desiredPosition2 = sliderMotor.getTargetPosition();
+
+            // Show the position of the tiltMotor on telemetry
+            telemetry.addData("Slider Encoder Position", position2);
+
+            // Show the target position of the tiltMotor on telemetry
+            telemetry.addData("Slider Desired Position", desiredPosition2);
+
+            telemetry.update();
+
 
         }
     }
