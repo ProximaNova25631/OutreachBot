@@ -22,6 +22,8 @@ public class OutreachTeleop extends LinearOpMode {
         Servo rotationClawServo = hardwareMap.servo.get("rotationClawServo");
         tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tiltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        sliderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sliderMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         int TiltUpPosition;
         int TiltDownPosition;
         int TopPosition;
@@ -51,15 +53,15 @@ public class OutreachTeleop extends LinearOpMode {
             double rx = gamepad1.right_stick_x;
 
             if (gamepad1.x) {
+                tiltMotor.setPower(0.5);
                 tiltMotor.setTargetPosition(TiltUpPosition);
                 tiltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                tiltMotor.setPower(0.5);
             }
 
             if (gamepad1.b) {
+                tiltMotor.setPower(0.3);
                 tiltMotor.setTargetPosition(TiltDownPosition);
                 tiltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                tiltMotor.setPower(0.3);
             }
 
             // Denominator is the largest motor power (absolute value) or 1
