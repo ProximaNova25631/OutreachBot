@@ -18,6 +18,8 @@ public class OutreachTeleop extends LinearOpMode {
         DcMotor tiltMotor = hardwareMap.dcMotor.get("TiltMotor");
         DcMotor sliderMotor = hardwareMap.dcMotor.get("SliderMotor");
         Servo clawServo = hardwareMap.servo.get("clawServo");
+        Servo armServo = hardwareMap.servo.get("armServo");
+        Servo rotationClawServo = hardwareMap.servo.get("rotationClawServo");
         tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tiltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         int TiltUpPosition;
@@ -40,11 +42,10 @@ public class OutreachTeleop extends LinearOpMode {
 
         waitForStart();
 
-        double tgtPower = 0;
-
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+            //Linkage Programming
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
@@ -75,7 +76,6 @@ public class OutreachTeleop extends LinearOpMode {
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
 
-
             // Get the current position of the armMotor
             double position = tiltMotor.getCurrentPosition();
 
@@ -89,19 +89,53 @@ public class OutreachTeleop extends LinearOpMode {
             telemetry.addData("Desired Position", desiredPosition);
 
             telemetry.update();
-
+            //Claw Programming
             // check to see if we need to move the servo.
             if(gamepad1.left_bumper) {
                 // move to 0 degrees.
                 clawServo.setPosition(0);
-            } else if (gamepad1.right_bumper) {
+            } else if (gamepad1.left_trigger > 0) {
                 // move to 90 degrees.
                 clawServo.setPosition(0.5);
             }
-            telemetry.addData("Servo Position", clawServo.getPosition());
-            telemetry.addData("Status", "Running");
+            telemetry.addData("Claw Servo Position", clawServo.getPosition());
+            telemetry.addData("Claw Status", "Running");
             telemetry.update();
 
+            //Arm Programming
+            if(gamepad1.right_bumper) {
+                // move to 0 degrees.
+                //set to correct degrees
+                armServo.setPosition(0);
+            } else if (gamepad1.right_trigger > 0.0) {
+                // move to 90 degrees.
+                //set to correct degrees
+                armServo.setPosition(0.5);
+            }
+            telemetry.addData("Arm Servo Position", armServo.getPosition());
+            telemetry.addData("Arm Status", "Running");
+            telemetry.update();
+
+            //Claw Rotation Programming
+            if (gamepad1.dpad_left) {
+                // move to 0 degrees.
+                //set to correct degrees
+                rotationClawServo.setPosition(0);
+            } else if (gamepad1.dpad_up) {
+                // move to 90 degrees.
+                //set to correct degrees
+                rotationClawServo.setPosition(0.5);
+            } else if (gamepad1.dpad_right) {
+                // move to 180 degrees.
+                //set to correct degrees
+                rotationClawServo.setPosition(1);
+            }
+
+            telemetry.addData("Claw Rotation Servo Position", rotationClawServo.getPosition());
+            telemetry.addData("Claw Rotation Status", "Running");
+            telemetry.update();
+
+            //Sliders Programming
             if (gamepad1.y) {
                 sliderMotor.setTargetPosition(TopPosition);
                 sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
