@@ -22,6 +22,8 @@ public class OutreachTeleop extends LinearOpMode {
         Servo rotationClawServo = hardwareMap.servo.get("rotationClawServo");
         tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tiltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        sliderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sliderMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         int TiltUpPosition;
         int TiltDownPosition;
         int TopPosition;
