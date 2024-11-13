@@ -20,9 +20,9 @@ public class OutreachTeleop extends LinearOpMode {
         DcMotor sliderMotor = hardwareMap.dcMotor.get("SliderMotor");
         Servo leftArm = hardwareMap.servo.get("leftArm");
         Servo rightArm = hardwareMap.servo.get("rightArm");
-//        Servo clawServo = hardwareMap.servo.get("clawServo");
-//        Servo armServo = hardwareMap.servo.get("armServo");
-//        Servo rotationClawServo = hardwareMap.servo.get("rotationClawServo");
+        Servo Claw = hardwareMap.servo.get("Claw");
+        Servo Elbow = hardwareMap.servo.get("Elbow");
+        Servo Wrist = hardwareMap.servo.get("Wrist");
         tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tiltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -34,6 +34,15 @@ public class OutreachTeleop extends LinearOpMode {
 
         double armPosition = 0.2;
         leftArm.setPosition(armPosition);
+
+        double clawPosition = 0.2;
+        Claw.setPosition(clawPosition);
+
+        double elbowPosition = 0.0;
+        Elbow.setPosition(elbowPosition);
+
+        double wristPosition = 0.0;
+        Wrist.setPosition(wristPosition);
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -95,49 +104,6 @@ public class OutreachTeleop extends LinearOpMode {
 
             // Show the target position of the tiltMotor on telemetry
             telemetry.addData("Desired Position", desiredPosition);
-            //Claw Programming
-            // check to see if we need to move the servo.
-//            if(gamepad1.left_bumper) {
-//                // move to 0 degrees.
-//                clawServo.setPosition(0);
-//            } else if (gamepad1.left_trigger > 0) {
-//                // move to 90 degrees.
-//                clawServo.setPosition(0.5);
-//            }
-//            telemetry.addData("Claw Servo Position", clawServo.getPosition());
-//            telemetry.update();
-
-            //Arm Programming
-//            if(gamepad1.right_bumper) {
-//                // move to 0 degrees.
-//                //set to correct degrees
-//                armServo.setPosition(0);
-//            } else if (gamepad1.right_trigger > 0.0) {
-//                // move to 90 degrees.
-//                //set to correct degrees
-//                armServo.setPosition(0.5);
-//            }
-//            telemetry.addData("Arm Servo Position", armServo.getPosition());
-//            telemetry.addData("Arm Status", "Running");
-//            telemetry.update();
-
-//            //Claw Rotation Programming
-//            if (gamepad1.dpad_left) {
-//                // move to 0 degrees.
-//                //set to correct degrees
-//                rotationClawServo.setPosition(0);
-//            } else if (gamepad1.dpad_up) {
-//                // move to 90 degrees.
-//                //set to correct degrees
-//                rotationClawServo.setPosition(0.5);
-//            } else if (gamepad1.dpad_right) {
-//                // move to 180 degrees.
-//                //set to correct degrees
-//                rotationClawServo.setPosition(1);
-//            }
-//
-//            telemetry.addData("Claw Rotation Servo Position", rotationClawServo.getPosition());
-//            telemetry.update();
 
             //Sliders Programming
             if (gamepad1.y) {
@@ -165,8 +131,50 @@ public class OutreachTeleop extends LinearOpMode {
                 }
             }
 
-            leftArm.setPosition(armPosition);
-            telemetry.addData("armPosition", armPosition);
+            telemetry.addData("arm position: ", armPosition);
+
+            if (gamepad1.left_trigger > 0.0) {
+                clawPosition += 0.05;
+                if (clawPosition > 0.8) {
+                    clawPosition = 0.8;
+                }
+            } else if (gamepad1.right_trigger > 0.0) {
+                clawPosition -= 0.05;
+                if (clawPosition < 0.2) {
+                    clawPosition = 0.2;
+                }
+            }
+
+
+            telemetry.addData("claw position: ", clawPosition);
+
+            if (gamepad1.left_bumper) {
+                elbowPosition += 0.05;
+                if (elbowPosition > 0.8) {
+                    elbowPosition = 0.8;
+                }
+            } else if (gamepad1.right_bumper) {
+                elbowPosition -= 0.05;
+                if (elbowPosition < 0.2) {
+                    elbowPosition = 0.2;
+                }
+            }
+            leftArm.setPosition(elbowPosition);
+            telemetry.addData("elbow position: ", elbowPosition);
+
+            if (gamepad1.dpad_left) {
+                wristPosition += 0.05;
+                if (wristPosition > 0.8) {
+                    wristPosition = 0.8;
+                }
+            } else if (gamepad1.dpad_right) {
+                wristPosition -= 0.05;
+                if (wristPosition < 0.2) {
+                    wristPosition = 0.2;
+                }
+            }
+
+            telemetry.addData("wrist position: ", wristPosition);
 
             // Get the current position of the armMotor
             double position2 = sliderMotor.getCurrentPosition();
