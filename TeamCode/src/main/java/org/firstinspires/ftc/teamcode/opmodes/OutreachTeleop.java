@@ -33,16 +33,24 @@ public class OutreachTeleop extends LinearOpMode {
         int BottomPosition;
 
         double armPosition = 0.2;
-        leftArm.setPosition(armPosition);
+        double armDownPosition = 0.7;
+        double armUpPosition = 0.8;
+        leftArm.setPosition(armUpPosition);
 
-        double clawPosition = 0.2;
-        Claw.setPosition(clawPosition);
+//        double clawPosition = 0.0;
+        double clawOpenPosition = 0.5;
+        double clawClosedPosition = 1.0;
+        Claw.setPosition(clawClosedPosition);
+
+        double elbowUpPosition = 0.55;
+        double elbowDownPosition = 0.25;
+        Elbow.setPosition(elbowUpPosition);
 
         double elbowPosition = 0.0;
-        Elbow.setPosition(elbowPosition);
-
+//        Elbow.setPosition(elbowPosition);
+//
         double wristPosition = 0.0;
-        Wrist.setPosition(wristPosition);
+//        Wrist.setPosition(wristPosition);
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -118,61 +126,43 @@ public class OutreachTeleop extends LinearOpMode {
                 sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 sliderMotor.setPower(0.3);
             }
+//
 
+            // GOOD
             if (gamepad1.dpad_up) {
-                armPosition += 0.05;
-                if (armPosition > 0.8) {
-                    armPosition = 0.8;
-                }
+                leftArm.setPosition(armUpPosition);
             } else if (gamepad1.dpad_down) {
-                armPosition -= 0.05;
-                if (armPosition < 0.2) {
-                    armPosition = 0.2;
-                }
+                leftArm.setPosition(armDownPosition);
             }
 
-            telemetry.addData("arm position: ", armPosition);
-
-            if (gamepad1.left_trigger > 0.0) {
-                clawPosition += 0.05;
-                if (clawPosition > 0.8) {
-                    clawPosition = 0.8;
-                }
-            } else if (gamepad1.right_trigger > 0.0) {
-                clawPosition -= 0.05;
-                if (clawPosition < 0.2) {
-                    clawPosition = 0.2;
-                }
+            // GOOD
+            if (gamepad1.dpad_left) {
+                Claw.setPosition(clawClosedPosition);
+            } else if (gamepad1.dpad_right) {
+                Claw.setPosition(clawOpenPosition);
             }
 
-
-            telemetry.addData("claw position: ", clawPosition);
+//            telemetry.addData("claw position", clawPosition);
 
             if (gamepad1.left_bumper) {
-                elbowPosition += 0.05;
-                if (elbowPosition > 0.8) {
-                    elbowPosition = 0.8;
-                }
+                Elbow.setPosition(elbowUpPosition);
             } else if (gamepad1.right_bumper) {
-                elbowPosition -= 0.05;
-                if (elbowPosition < 0.2) {
-                    elbowPosition = 0.2;
-                }
+                Elbow.setPosition(elbowDownPosition);
             }
-            leftArm.setPosition(elbowPosition);
-            telemetry.addData("elbow position: ", elbowPosition);
 
-            if (gamepad1.dpad_left) {
-                wristPosition += 0.05;
-                if (wristPosition > 0.8) {
-                    wristPosition = 0.8;
-                }
-            } else if (gamepad1.dpad_right) {
-                wristPosition -= 0.05;
-                if (wristPosition < 0.2) {
-                    wristPosition = 0.2;
-                }
-            }
+            telemetry.addData("elbow position: ", elbowPosition);
+//
+//            if (gamepad1.dpad_left) {
+//                wristPosition += 0.05;
+//                if (wristPosition > 0.8) {
+//                    wristPosition = 0.8;
+//                }
+//            } else if (gamepad1.dpad_right) {
+//                wristPosition -= 0.05;
+//                if (wristPosition < 0.2) {
+//                    wristPosition = 0.2;
+//                }
+//            }
 
             telemetry.addData("wrist position: ", wristPosition);
 
