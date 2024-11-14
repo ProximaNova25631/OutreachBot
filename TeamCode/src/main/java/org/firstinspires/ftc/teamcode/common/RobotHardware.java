@@ -45,8 +45,8 @@ public class RobotHardware {
     public static double elbowUpPosition = 0.55;
     public static double elbowDownPosition = 0.25;
 
-    public static int TILT_UP_POSITION = 5;
-    public static int TILT_DOWN_POSITION = -665;
+    public static int TILT_UP_POSITION = 600;
+    public static int TILT_DOWN_POSITION = 0;
 
     public static RobotHardware getInstance() {
         if (instance == null) {
