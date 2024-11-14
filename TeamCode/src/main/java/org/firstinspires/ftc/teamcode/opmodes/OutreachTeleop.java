@@ -120,9 +120,9 @@ public class OutreachTeleop extends LinearOpMode {
 
     private void grabAndTiltUpCombo() throws InterruptedException {
         robot.rightArm.setPosition(robot.armDownPosition + .05);
-        Thread.sleep(500);
+        sleep(500);
         robot.claw.setPosition(robot.clawClosedPosition);
-        Thread.sleep(500);
+        sleep(500);
         robot.elbow.setPosition(robot.elbowUpPosition);
         robot.rightArm.setPosition(robot.armUpPosition);
     }
