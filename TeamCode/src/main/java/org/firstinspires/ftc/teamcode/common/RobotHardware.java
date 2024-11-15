@@ -32,18 +32,18 @@ public class RobotHardware {
     public Servo elbow;
     public Servo wrist;
 
-    public static double armUpPosition = 0.40;
-    public static double armDownPosition = 0.568;
+    public static double ARM_UP_POSITION = 0.40;
+    public static double ARM_DOWN_POSITION = 0.568;
 
-    public static int sliderTopPosition = -500;
-    public static int sliderBottomPosition = 10;
+    public static int SLIDER_TOP_POSITION = -500;
+    public static int SLIDER_BOTTOM_POSITION = 10;
 
 
-    public static double clawOpenPosition = 0.5;
-    public static double clawClosedPosition = 1.0;
+    public static double CLAW_OPEN_POSITION = 0.5;
+    public static double CLAW_CLOSED_POSITION = 1.0;
 
-    public static double elbowUpPosition = 0.55;
-    public static double elbowDownPosition = 0.25;
+    public static double ELBOW_UP_POSITION = 0.55;
+    public static double ELBOW_DOWN_POSITION = 0.25;
 
     public static int TILT_UP_POSITION = 600;
     public static int TILT_DOWN_POSITION = 0;
@@ -82,9 +82,9 @@ public class RobotHardware {
         sliderMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Initialize positions
-        rightArm.setPosition(armUpPosition);
-        claw.setPosition(clawClosedPosition);
-        elbow.setPosition(elbowUpPosition);
+        rightArm.setPosition(ARM_UP_POSITION);
+        claw.setPosition(CLAW_CLOSED_POSITION);
+        elbow.setPosition(ELBOW_UP_POSITION);
     }
 }
 

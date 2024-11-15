@@ -23,7 +23,7 @@ public class TeleopWithoutSliders extends LinearOpMode {
             mecanumDrive.drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             if (gamepad1.dpad_right) {
-                robot.claw.setPosition(robot.clawOpenPosition);
+                robot.claw.setPosition(robot.CLAW_OPEN_POSITION);
             }
 
             if (gamepad1.left_bumper) {
@@ -37,17 +37,17 @@ public class TeleopWithoutSliders extends LinearOpMode {
     }
 
     private void tiltDownCombo() {
-        robot.elbow.setPosition(robot.elbowDownPosition);
-        robot.claw.setPosition(robot.clawOpenPosition);
-        robot.rightArm.setPosition(robot.armDownPosition);
+        robot.elbow.setPosition(robot.ELBOW_DOWN_POSITION);
+        robot.claw.setPosition(robot.CLAW_OPEN_POSITION);
+        robot.rightArm.setPosition(robot.ARM_DOWN_POSITION);
     }
 
     private void grabAndTiltUpCombo() throws InterruptedException {
-        robot.rightArm.setPosition(robot.armDownPosition + .05);
+        robot.rightArm.setPosition(robot.ARM_DOWN_POSITION + .05);
         Thread.sleep(500);
-        robot.claw.setPosition(robot.clawClosedPosition);
+        robot.claw.setPosition(robot.CLAW_CLOSED_POSITION);
         Thread.sleep(500);
-        robot.elbow.setPosition(robot.elbowUpPosition);
-        robot.rightArm.setPosition(robot.armUpPosition);
+        robot.elbow.setPosition(robot.ELBOW_UP_POSITION);
+        robot.rightArm.setPosition(robot.ARM_UP_POSITION);
     }
 }
