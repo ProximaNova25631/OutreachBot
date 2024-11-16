@@ -31,4 +31,23 @@ public class Linkage {
         tiltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         tiltMotor.setPower(0.3);
     }
+
+    public void stopLinkageIfClose() {
+        int currentPosition = tiltMotor.getCurrentPosition();
+        if (Math.abs(currentPosition - linkageCurrentPosition) <= 10) {
+            tiltMotor.setPower(0.0);
+        }
+    }
+
+    public int getCurrentPosition() {
+        return tiltMotor.getCurrentPosition();
+    }
+
+    public int getTargetPosition() {
+        return tiltMotor.getTargetPosition();
+    }
+
+    public double getPower() {
+        return tiltMotor.getPower();
+    }
 }

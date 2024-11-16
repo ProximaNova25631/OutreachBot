@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.common.Combos;
-import org.firstinspires.ftc.teamcode.common.Linkage;
 import org.firstinspires.ftc.teamcode.common.MecanumDrive;
 import org.firstinspires.ftc.teamcode.common.RobotHardware;
 
@@ -19,7 +18,6 @@ public class OutreachTeleop extends LinearOpMode {
     private static final RobotHardware robot = RobotHardware.getInstance();
     private static final MecanumDrive mecanumDrive = new MecanumDrive(false, 0.75);
     private int sliderCurrentPosition = RobotHardware.SLIDER_BOTTOM_POSITION;
-    private int linkageCurrentPosition = RobotHardware.TILT_DOWN_POSITION;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -76,28 +74,19 @@ public class OutreachTeleop extends LinearOpMode {
 
     private void moveLinkage() {
         // Check to see if we are close enough to the current target
-        int currentPosition = robot.tiltMotor.getCurrentPosition();
-        if (Math.abs(currentPosition - linkageCurrentPosition) <= 10) {
-            robot.tiltMotor.setPower(0.0);
-        }
+        robot.linkage.stopLinkageIfClose();
 
         if (gamepad1.dpad_up) {
-            linkageCurrentPosition = RobotHardware.TILT_UP_POSITION;
-            robot.tiltMotor.setTargetPosition(linkageCurrentPosition);
-            robot.tiltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.tiltMotor.setPower(0.5);
+            robot.linkage.moveLinkageUp();
         }
 
         if (gamepad1.dpad_down) {
-            linkageCurrentPosition = RobotHardware.TILT_DOWN_POSITION;
-            robot.tiltMotor.setTargetPosition(linkageCurrentPosition);
-            robot.tiltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.tiltMotor.setPower(0.3);
+            robot.linkage.moveLinkageDown();
         }
 
-        telemetry.addData("Linkage Encoder Position", robot.tiltMotor.getCurrentPosition());
-        telemetry.addData("Linkage Desired Position", robot.tiltMotor.getTargetPosition());
-        telemetry.addData("Linkage power", robot.tiltMotor.getPower());
+        telemetry.addData("Linkage Encoder Position", robot.linkage.getCurrentPosition());
+        telemetry.addData("Linkage Desired Position", robot.linkage.getTargetPosition());
+        telemetry.addData("Linkage power", robot.linkage.getPower());
     }
 
     private void moveWrist() {
