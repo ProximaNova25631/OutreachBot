@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.common.Combos;
+import org.firstinspires.ftc.teamcode.common.Slides;
 import org.firstinspires.ftc.teamcode.common.MecanumDrive;
 import org.firstinspires.ftc.teamcode.common.RobotHardware;
 
@@ -22,6 +23,7 @@ public class OutreachTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Combos combos = new Combos();
+        Slides slides = new Slides();
         robot.init(hardwareMap);
 
         waitForStart();
@@ -49,27 +51,19 @@ public class OutreachTeleop extends LinearOpMode {
 
     private void moveSliders() {
         // Check to see if we are close enough to the current target
-        int currentPosition = robot.sliderMotor.getCurrentPosition();
-        if (Math.abs(currentPosition - sliderCurrentPosition) <= 10) {
-            robot.sliderMotor.setPower(0.0);
-        }
+        robot.slides.stopSlidesIfClose();
 
         if (gamepad1.y) {
-            sliderCurrentPosition = RobotHardware.SLIDER_TOP_POSITION;
-            robot.sliderMotor.setTargetPosition(sliderCurrentPosition);
-            robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.sliderMotor.setPower(0.5);
+            robot.slides.slidesMoveToTop();
         }
 
         if (gamepad1.a) {
-            sliderCurrentPosition = RobotHardware.SLIDER_BOTTOM_POSITION;
-            robot.sliderMotor.setTargetPosition(sliderCurrentPosition);
-            robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.sliderMotor.setPower(0.3);
+            robot.slides.slidesMoveToBottom();
         }
 
-        telemetry.addData("Slider Encoder Position", robot.sliderMotor.getCurrentPosition());
-        telemetry.addData("Slider Desired Position", robot.sliderMotor.getTargetPosition());
+        telemetry.addData("Slider Encoder Position", robot.slides.getSliderCurrentPosition());
+        telemetry.addData("Slider Desired Position", robot.slides.getSliderTargetPosition());
+        telemetry.addData("Slider power", robot.slides.getSliderPower());
     }
 
     private void moveLinkage() {

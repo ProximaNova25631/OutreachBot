@@ -12,7 +12,6 @@ public class RobotHardware {
     private static final String FRONT_RIGHT_MOTOR = "frontRightMotor";
     private static final String BACK_LEFT_MOTOR = "backLeftMotor";
     private static final String BACK_RIGHT_MOTOR = "backRightMotor";
-    private static final String SLIDER_MOTOR = "SliderMotor";
     private static final String LEFT_ARM = "leftArm";
     private static final String RIGHT_ARM = "rightArm";
     private static final String CLAW = "Claw";
@@ -23,13 +22,14 @@ public class RobotHardware {
     public DcMotor frontRightMotor;
     public DcMotor backLeftMotor;
     public DcMotor backRightMotor;
-    public DcMotor sliderMotor;
     public Servo leftArm;
     public Servo rightArm;
     public Servo claw;
     public Servo elbow;
     public Servo wrist;
     public Linkage linkage;
+    public Slides slides;
+
 
     public static double ARM_UP_POSITION = 0.20;
     public static double ARM_DOWN_POSITION = 0.28;
@@ -61,7 +61,6 @@ public class RobotHardware {
         frontRightMotor = hardwareMap.dcMotor.get(FRONT_RIGHT_MOTOR);
         backLeftMotor = hardwareMap.dcMotor.get(BACK_LEFT_MOTOR);
         backRightMotor = hardwareMap.dcMotor.get(BACK_RIGHT_MOTOR);
-        sliderMotor = hardwareMap.dcMotor.get(SLIDER_MOTOR);
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -75,8 +74,6 @@ public class RobotHardware {
         elbow = hardwareMap.servo.get(ELBOW);
         wrist = hardwareMap.servo.get(WRIST);
 
-        sliderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        sliderMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Initialize positions
         leftArm.setDirection(Servo.Direction.REVERSE);
