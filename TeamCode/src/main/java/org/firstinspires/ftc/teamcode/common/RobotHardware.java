@@ -12,7 +12,6 @@ public class RobotHardware {
     private static final String FRONT_RIGHT_MOTOR = "frontRightMotor";
     private static final String BACK_LEFT_MOTOR = "backLeftMotor";
     private static final String BACK_RIGHT_MOTOR = "backRightMotor";
-    private static final String TILT_MOTOR = "TiltMotor";
     private static final String SLIDER_MOTOR = "SliderMotor";
     private static final String LEFT_ARM = "leftArm";
     private static final String RIGHT_ARM = "rightArm";
@@ -24,13 +23,13 @@ public class RobotHardware {
     public DcMotor frontRightMotor;
     public DcMotor backLeftMotor;
     public DcMotor backRightMotor;
-    public DcMotor tiltMotor;
     public DcMotor sliderMotor;
     public Servo leftArm;
     public Servo rightArm;
     public Servo claw;
     public Servo elbow;
     public Servo wrist;
+    public Linkage linkage;
 
     public static double ARM_UP_POSITION = 0.20;
     public static double ARM_DOWN_POSITION = 0.28;
@@ -45,8 +44,6 @@ public class RobotHardware {
     public static double ELBOW_UP_POSITION = 0.55;
     public static double ELBOW_DOWN_POSITION = 0.25;
 
-    public static int TILT_UP_POSITION = 600;
-    public static int TILT_DOWN_POSITION = 0;
 
     public static RobotHardware getInstance() {
         if (instance == null) {
@@ -57,11 +54,13 @@ public class RobotHardware {
     }
 
     public void init(HardwareMap hardwareMap) {
+        linkage = new Linkage();
+        linkage.init(hardwareMap);
+
         frontLeftMotor = hardwareMap.dcMotor.get(FRONT_LEFT_MOTOR);
         frontRightMotor = hardwareMap.dcMotor.get(FRONT_RIGHT_MOTOR);
         backLeftMotor = hardwareMap.dcMotor.get(BACK_LEFT_MOTOR);
         backRightMotor = hardwareMap.dcMotor.get(BACK_RIGHT_MOTOR);
-        tiltMotor = hardwareMap.dcMotor.get(TILT_MOTOR);
         sliderMotor = hardwareMap.dcMotor.get(SLIDER_MOTOR);
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -76,8 +75,6 @@ public class RobotHardware {
         elbow = hardwareMap.servo.get(ELBOW);
         wrist = hardwareMap.servo.get(WRIST);
 
-        tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        tiltMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         sliderMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         sliderMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
