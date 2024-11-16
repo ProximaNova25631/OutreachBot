@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.common.Combos;
 import org.firstinspires.ftc.teamcode.common.MecanumDrive;
 import org.firstinspires.ftc.teamcode.common.RobotHardware;
 
@@ -14,13 +15,14 @@ import org.firstinspires.ftc.teamcode.common.RobotHardware;
 
 @TeleOp
 public class OutreachTeleop extends LinearOpMode {
-    private static RobotHardware robot = RobotHardware.getInstance();
-    private static MecanumDrive mecanumDrive = new MecanumDrive(false, 0.75);
-    private int sliderCurrentPosition = robot.SLIDER_BOTTOM_POSITION;
-    private int linkageCurrentPosition = robot.TILT_DOWN_POSITION;
+    private static final RobotHardware robot = RobotHardware.getInstance();
+    private static final MecanumDrive mecanumDrive = new MecanumDrive(false, 0.75);
+    private int sliderCurrentPosition = RobotHardware.SLIDER_BOTTOM_POSITION;
+    private int linkageCurrentPosition = RobotHardware.TILT_DOWN_POSITION;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        Combos combos = new Combos();
         robot.init(hardwareMap);
 
         waitForStart();
@@ -33,13 +35,13 @@ public class OutreachTeleop extends LinearOpMode {
             moveLinkage();
 
             if (gamepad1.dpad_right) {
-                robot.claw.setPosition(robot.CLAW_OPEN_POSITION);
+                robot.claw.setPosition(RobotHardware.CLAW_OPEN_POSITION);
             }
 
             if (gamepad1.left_bumper) {
-                grabAndTiltUpCombo();
+                combos.grabAndTiltUpCombo();
             } else if (gamepad1.right_bumper) {
-                tiltDownCombo();
+                combos.tiltDownCombo();
             }
 
             telemetry.update();
@@ -54,14 +56,14 @@ public class OutreachTeleop extends LinearOpMode {
         }
 
         if (gamepad1.y) {
-            sliderCurrentPosition = robot.SLIDER_TOP_POSITION;
+            sliderCurrentPosition = RobotHardware.SLIDER_TOP_POSITION;
             robot.sliderMotor.setTargetPosition(sliderCurrentPosition);
             robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.sliderMotor.setPower(0.5);
         }
 
         if (gamepad1.a) {
-            sliderCurrentPosition = robot.SLIDER_BOTTOM_POSITION;
+            sliderCurrentPosition = RobotHardware.SLIDER_BOTTOM_POSITION;
             robot.sliderMotor.setTargetPosition(sliderCurrentPosition);
             robot.sliderMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.sliderMotor.setPower(0.3);
@@ -79,14 +81,14 @@ public class OutreachTeleop extends LinearOpMode {
         }
 
         if (gamepad1.dpad_up) {
-            linkageCurrentPosition = robot.TILT_UP_POSITION;
+            linkageCurrentPosition = RobotHardware.TILT_UP_POSITION;
             robot.tiltMotor.setTargetPosition(linkageCurrentPosition);
             robot.tiltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.tiltMotor.setPower(0.5);
         }
 
         if (gamepad1.dpad_down) {
-            linkageCurrentPosition = robot.TILT_DOWN_POSITION;
+            linkageCurrentPosition = RobotHardware.TILT_DOWN_POSITION;
             robot.tiltMotor.setTargetPosition(linkageCurrentPosition);
             robot.tiltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.tiltMotor.setPower(0.3);
@@ -110,20 +112,5 @@ public class OutreachTeleop extends LinearOpMode {
 //                    wristPosition = 0.2;
 //                }
 //            }
-    }
-
-    private void tiltDownCombo() {
-        robot.elbow.setPosition(robot.ELBOW_DOWN_POSITION);
-        robot.claw.setPosition(robot.CLAW_OPEN_POSITION);
-        robot.leftArm.setPosition(robot.ARM_DOWN_POSITION);
-    }
-
-    private void grabAndTiltUpCombo() throws InterruptedException {
-        robot.leftArm.setPosition(robot.ARM_DOWN_POSITION + .05);
-        sleep(500);
-        robot.claw.setPosition(robot.CLAW_CLOSED_POSITION);
-        sleep(500);
-        robot.elbow.setPosition(robot.ELBOW_UP_POSITION);
-        robot.leftArm.setPosition(robot.ARM_UP_POSITION);
     }
 }
