@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.common;
 public class MecanumDrive {
     private static RobotHardware robot = RobotHardware.getInstance();
     private boolean useTrigonometric = false;
-    private double speedLimit = 0.50;
+    private double speedLimit = 1.0;
 
     public MecanumDrive(boolean useTrigonometric, double speedLimit) {
         this.useTrigonometric = useTrigonometric;

@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.common.RobotHardware;
 @TeleOp
 public class OutreachTeleop extends LinearOpMode {
     private static RobotHardware robot = RobotHardware.getInstance();
-    private static MecanumDrive mecanumDrive = new MecanumDrive(false, 0.25);
+    private static MecanumDrive mecanumDrive = new MecanumDrive(false, 0.75);
     private int sliderCurrentPosition = robot.SLIDER_BOTTOM_POSITION;
     private int linkageCurrentPosition = robot.TILT_DOWN_POSITION;
 
@@ -115,15 +115,15 @@ public class OutreachTeleop extends LinearOpMode {
     private void tiltDownCombo() {
         robot.elbow.setPosition(robot.ELBOW_DOWN_POSITION);
         robot.claw.setPosition(robot.CLAW_OPEN_POSITION);
-        robot.rightArm.setPosition(robot.ARM_DOWN_POSITION);
+        robot.leftArm.setPosition(robot.ARM_DOWN_POSITION);
     }
 
     private void grabAndTiltUpCombo() throws InterruptedException {
-        robot.rightArm.setPosition(robot.ARM_DOWN_POSITION + .05);
+        robot.leftArm.setPosition(robot.ARM_DOWN_POSITION + .05);
         sleep(500);
         robot.claw.setPosition(robot.CLAW_CLOSED_POSITION);
         sleep(500);
         robot.elbow.setPosition(robot.ELBOW_UP_POSITION);
-        robot.rightArm.setPosition(robot.ARM_UP_POSITION);
+        robot.leftArm.setPosition(robot.ARM_UP_POSITION);
     }
 }
