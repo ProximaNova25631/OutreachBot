@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.common.RobotHardware;
 // TODO
 // 1. Move MecanumDrive to RobotHardware
 // 2. Move combos to combos class
-// 3. Move Linkage and Sliders to common/modules/Linkage.java, Sliders.java
+// 3. Move Linkage and Sliders to common/modules/Linkage.java, Sliders.java (accidently named it slides)
 
 @TeleOp
 public class OutreachTeleop extends LinearOpMode {
