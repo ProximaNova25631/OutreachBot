@@ -1,53 +1,75 @@
 package org.firstinspires.ftc.teamcode.opmodes;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.common.Combos;
-import org.firstinspires.ftc.teamcode.common.Slides;
-import org.firstinspires.ftc.teamcode.common.MecanumDrive;
-import org.firstinspires.ftc.teamcode.common.RobotHardware;
-
-
-// TODO
-// 1. Move MecanumDrive to RobotHardware
-// 2. Move combos to combos class
-// 3. Move Linkage and Sliders to common/modules/Linkage.java, Sliders.java (accidently named it slides)
+import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeDownCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeUpCommand;
+import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 @TeleOp
-public class OutreachTeleop extends LinearOpMode {
+public class OutreachTeleop extends CommandOpMode {
     private static final RobotHardware robot = RobotHardware.getInstance();
-    private static final MecanumDrive mecanumDrive = new MecanumDrive(false, 0.75);
-    private int sliderCurrentPosition = RobotHardware.SLIDER_BOTTOM_POSITION;
+
+    private GamepadEx gamepadEx1;
+    private GamepadEx gamepadEx2;
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        Combos combos = new Combos();
-        Slides slides = new Slides();
+    public void initialize() {
+        gamepadEx1 = new GamepadEx(gamepad1);
+        gamepadEx2 = new GamepadEx(gamepad2);
+
         robot.init(hardwareMap);
 
-        waitForStart();
-
-        if (isStopRequested()) return;
-
-        while (opModeIsActive()) {
-            mecanumDrive.drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            moveSliders();
-            moveLinkage();
-
-            if (gamepad1.dpad_right) {
-                robot.claw.setPosition(RobotHardware.CLAW_OPEN_POSITION);
-            }
-
-            if (gamepad1.left_bumper) {
-                combos.grabAndTiltUpCombo();
-            } else if (gamepad1.right_bumper) {
-                combos.tiltDownCombo();
-            }
-
-            telemetry.update();
-        }
+        // Set up commands to execute from gamepad controllers
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(new IntakeDownCommand());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(new IntakeUpCommand());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(new ClawCommand(RobotHardware.ClawPosition.OPEN));
     }
+
+    @Override
+    public void run() {
+        CommandScheduler.getInstance().run();
+        robot.read();
+        robot.periodic();
+        robot.write();
+
+        robot.mecanumDrive.robotCentric(-gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
+    }
+
+//    @Override
+//    public void runOpMode() throws InterruptedException {
+//        Combos combos = new Combos();
+//        robot.init(hardwareMap);
+//
+//        waitForStart();
+//
+//        if (isStopRequested()) return;
+//
+//        while (opModeIsActive()) {
+//            mecanumDrive.drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+//            moveSliders();
+//            moveLinkage();
+//
+//            if (gamepad1.dpad_right) {
+//                robot.claw.setPosition(RobotHardware.CLAW_OPEN_POSITION);
+//            }
+//
+//            if (gamepad1.left_bumper) {
+//                combos.grabAndTiltUpCombo();
+//            } else if (gamepad1.right_bumper) {
+//                combos.tiltDownCombo();
+//            }
+//
+//            telemetry.update();
+//        }
+//    }
 
     private void moveSliders() {
         // Check to see if we are close enough to the current target
@@ -61,9 +83,10 @@ public class OutreachTeleop extends LinearOpMode {
             robot.slides.slidesMoveToBottom();
         }
 
-        telemetry.addData("Slider Encoder Position", robot.slides.getSliderCurrentPosition());
-        telemetry.addData("Slider Desired Position", robot.slides.getSliderTargetPosition());
-        telemetry.addData("Slider power", robot.slides.getSliderPower());
+        telemetry.addData("Slider Position", robot.slides.getSliderCurrentPosition());
+        telemetry.addData("Slider Desired", robot.slides.getSliderTargetPosition());
+        telemetry.addData("Slider Power", robot.slides.getSliderPower());
+        telemetry.addData("ZeroPowerBehavior", robot.slides.sliderMotor2.getZeroPowerBehavior());
     }
 
     private void moveLinkage() {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common;
+package org.firstinspires.ftc.teamcode.common.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -7,7 +7,7 @@ public class Linkage {
     private static final String TILT_MOTOR = "TiltMotor";
     public DcMotor tiltMotor;
 
-    public static int TILT_UP_POSITION = 600;
+    public static int TILT_UP_POSITION = 950;
     public static int TILT_DOWN_POSITION = 0;
 
     private int linkageCurrentPosition = TILT_DOWN_POSITION;

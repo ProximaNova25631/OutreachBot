@@ -1,22 +1,25 @@
-package org.firstinspires.ftc.teamcode.common;
+package org.firstinspires.ftc.teamcode.common.hardware;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 public class MecanumDrive {
     private static RobotHardware robot = RobotHardware.getInstance();
     private boolean useTrigonometric = false;
     private double speedLimit = 1.0;
+    private Telemetry telemetry;
+
+    private double frontLeftPower = 0.0;
+    private double frontRightPower = 0.0;
+    private double backLeftPower = 0.0;
+    private double backRightPower = 0.0;
 
     public MecanumDrive(boolean useTrigonometric, double speedLimit) {
         this.useTrigonometric = useTrigonometric;
         this.speedLimit = speedLimit;
     }
 
-    public void drive(double strafeX, double driveY, double rotate) {
-
-        double frontLeftPower = 0.0;
-        double frontRightPower = 0.0;
-        double backLeftPower = 0.0;
-        double backRightPower = 0.0;
-
+    public void robotCentric(double strafeX, double driveY, double rotate) {
         if (useTrigonometric) {
             double r = Math.hypot(strafeX, driveY);          // Radius (magnitude)
             double robotAngle = Math.atan2(driveY, strafeX);  // Direction (angle)
@@ -50,10 +53,20 @@ public class MecanumDrive {
             frontRightPower = (y - x - rx) / denominator;
             backRightPower = (y + x - rx) / denominator;
         }
+    }
 
+    public void write() {
         robot.frontLeftMotor.setPower(frontLeftPower * speedLimit);
         robot.backLeftMotor.setPower(backLeftPower * speedLimit);
         robot.frontRightMotor.setPower(frontRightPower* speedLimit);
         robot.backRightMotor.setPower(backRightPower * speedLimit);
+    }
+
+    public void stop(){
+        robotCentric(0, 0, 0);
+    }
+
+    public void setTelemetry(Telemetry telemetry){
+        this.telemetry = telemetry;
     }
 }

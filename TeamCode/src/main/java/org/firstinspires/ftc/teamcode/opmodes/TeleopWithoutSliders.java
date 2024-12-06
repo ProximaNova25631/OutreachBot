@@ -1,53 +1,42 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.common.MecanumDrive;
-import org.firstinspires.ftc.teamcode.common.RobotHardware;
+import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeDownCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeUpCommand;
+import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 @TeleOp
-public class TeleopWithoutSliders extends LinearOpMode {
+public class TeleopWithoutSliders extends CommandOpMode {
     private static RobotHardware robot = RobotHardware.getInstance();
-    private static MecanumDrive mecanumDrive = new MecanumDrive(false, 0.25);
+    private GamepadEx gamepadEx1;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void initialize() {
+        gamepadEx1 = new GamepadEx(gamepad1);
         robot.init(hardwareMap);
 
-        waitForStart();
-
-        if (isStopRequested()) return;
-
-        while (opModeIsActive()) {
-            mecanumDrive.drive(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-
-            if (gamepad1.dpad_right) {
-                robot.claw.setPosition(robot.CLAW_OPEN_POSITION);
-            }
-
-            if (gamepad1.left_bumper) {
-                grabAndTiltUpCombo();
-            } else if (gamepad1.right_bumper) {
-                tiltDownCombo();
-            }
-
-            telemetry.update();
-        }
+        // Set up commands to execute from gamepad controllers
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(new IntakeDownCommand());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(new IntakeUpCommand());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(new ClawCommand(RobotHardware.ClawPosition.OPEN));
     }
 
-    private void tiltDownCombo() {
-        robot.elbow.setPosition(robot.ELBOW_DOWN_POSITION);
-        robot.claw.setPosition(robot.CLAW_OPEN_POSITION);
-        robot.rightArm.setPosition(robot.ARM_DOWN_POSITION);
-    }
+    @Override
+    public void run() {
+        CommandScheduler.getInstance().run();
+        robot.read();
+        robot.periodic();
+        robot.write();
 
-    private void grabAndTiltUpCombo() throws InterruptedException {
-        robot.rightArm.setPosition(robot.ARM_DOWN_POSITION + .05);
-        Thread.sleep(500);
-        robot.claw.setPosition(robot.CLAW_CLOSED_POSITION);
-        Thread.sleep(500);
-        robot.elbow.setPosition(robot.ELBOW_UP_POSITION);
-        robot.rightArm.setPosition(robot.ARM_UP_POSITION);
+        robot.mecanumDrive.robotCentric(-gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
     }
 }
