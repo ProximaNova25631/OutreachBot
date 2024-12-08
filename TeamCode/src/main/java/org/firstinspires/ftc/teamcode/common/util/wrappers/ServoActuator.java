@@ -7,7 +7,6 @@ public class ServoActuator {
     private List<WServo> servoList = new ArrayList<>();
     private double prevTargetPosition = 0.0;
     private double targetPosition = 0.0;
-    private ActuatorPositions positions = null;
 
     public ServoActuator(WServo... servos) {
         for (WServo s : servos) {
@@ -28,12 +27,7 @@ public class ServoActuator {
         targetPosition = position;
     }
 
-    public void setTargetPosition(Object key) {
-        targetPosition = positions.get(key);
-    }
-
-    public void setActuatorPositions(ActuatorPositions actuatorPositions) {
-        positions = actuatorPositions;
-        targetPosition = actuatorPositions.getDefaultValue();
+    public double getTargetPosition() {
+        return targetPosition;
     }
 }

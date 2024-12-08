@@ -21,6 +21,8 @@ public class IntakeDeliverySubsystem extends SubsystemCore {
         robot.elbowActuator.write();
         robot.wristActuator.write();
         robot.clawActuator.write();
+        robot.slides.write();
+        robot.linkage.write();
     }
 
     @Override

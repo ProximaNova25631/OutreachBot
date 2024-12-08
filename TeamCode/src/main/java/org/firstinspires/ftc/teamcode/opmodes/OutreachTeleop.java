@@ -6,8 +6,11 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.LinkageCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.SlidesCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeDownCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeUpCommand;
+import org.firstinspires.ftc.teamcode.common.hardware.Config;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 @TeleOp
@@ -30,7 +33,17 @@ public class OutreachTeleop extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(new IntakeUpCommand());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(new ClawCommand(RobotHardware.ClawPosition.OPEN));
+                .whenPressed(new ClawCommand(Config.CLAW_OPEN_POSITION));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+                .whenPressed(new ClawCommand(Config.CLAW_CLOSED_POSITION));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(new LinkageCommand(Config.TILT_UP_POSITION));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(new LinkageCommand(Config.TILT_DOWN_POSITION));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new SlidesCommand(Config.SLIDER_TOP_POSITION));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(new SlidesCommand(Config.SLIDER_CLOSE_INTAKE_POSITION));
     }
 
     @Override
@@ -40,7 +53,26 @@ public class OutreachTeleop extends CommandOpMode {
         robot.periodic();
         robot.write();
 
-        robot.mecanumDrive.robotCentric(-gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
+        robot.mecanumDrive.robotCentric(gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
+
+        telemetry.addData("Claw position", robot.clawActuator.getTargetPosition());
+        telemetry.addData("Arm position", robot.armActuator.getTargetPosition());
+        telemetry.addData("Elbow position", robot.elbowActuator.getTargetPosition());
+        telemetry.addData("GamepadEx1.rightbumper", gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).get());
+
+        telemetry.addData("Tilt current position", robot.linkage.getCurrentPosition());
+        telemetry.addData("Tilt target position", robot.linkage.getTargetPosition());
+        telemetry.addData("Tilt current power", robot.linkage.getPower());
+
+        telemetry.addData("Slides current position", robot.slides.getSliderCurrentPosition());
+        telemetry.addData("Slides target position", robot.slides.getSliderTargetPosition());
+        telemetry.addData("Slides current power", robot.slides.getSliderPower());
+
+//        telemetry.addData("Slider Desired", robot.slides.getSliderTargetPosition());
+//        telemetry.addData("Slider Power", robot.slides.getSliderPower());
+//        telemetry.addData("ZeroPowerBehavior", robot.slides.sliderMotor2.getZeroPowerBehavior());
+
+        telemetry.update();
     }
 
 //    @Override
@@ -71,40 +103,40 @@ public class OutreachTeleop extends CommandOpMode {
 //        }
 //    }
 
-    private void moveSliders() {
-        // Check to see if we are close enough to the current target
-        robot.slides.stopSlidesIfClose();
-
-        if (gamepad1.y) {
-            robot.slides.slidesMoveToTop();
-        }
-
-        if (gamepad1.a) {
-            robot.slides.slidesMoveToBottom();
-        }
-
-        telemetry.addData("Slider Position", robot.slides.getSliderCurrentPosition());
-        telemetry.addData("Slider Desired", robot.slides.getSliderTargetPosition());
-        telemetry.addData("Slider Power", robot.slides.getSliderPower());
-        telemetry.addData("ZeroPowerBehavior", robot.slides.sliderMotor2.getZeroPowerBehavior());
-    }
-
-    private void moveLinkage() {
-        // Check to see if we are close enough to the current target
-        robot.linkage.stopLinkageIfClose();
-
-        if (gamepad1.dpad_up) {
-            robot.linkage.moveLinkageUp();
-        }
-
-        if (gamepad1.dpad_down) {
-            robot.linkage.moveLinkageDown();
-        }
-
-        telemetry.addData("Linkage Encoder Position", robot.linkage.getCurrentPosition());
-        telemetry.addData("Linkage Desired Position", robot.linkage.getTargetPosition());
-        telemetry.addData("Linkage power", robot.linkage.getPower());
-    }
+//    private void moveSliders() {
+//        // Check to see if we are close enough to the current target
+//        robot.slides.stopSlidesIfClose();
+//
+//        if (gamepad1.y) {
+//            robot.slides.slidesMoveToTop();
+//        }
+//
+//        if (gamepad1.a) {
+//            robot.slides.slidesMoveToBottom();
+//        }
+//
+//        telemetry.addData("Slider Position", robot.slides.getSliderCurrentPosition());
+//        telemetry.addData("Slider Desired", robot.slides.getSliderTargetPosition());
+//        telemetry.addData("Slider Power", robot.slides.getSliderPower());
+//        telemetry.addData("ZeroPowerBehavior", robot.slides.sliderMotor2.getZeroPowerBehavior());
+//    }
+//
+//    private void moveLinkage() {
+//        // Check to see if we are close enough to the current target
+//        robot.linkage.stopLinkageIfClose();
+//
+//        if (gamepad1.dpad_up) {
+//            robot.linkage.moveLinkageUp();
+//        }
+//
+//        if (gamepad1.dpad_down) {
+//            robot.linkage.moveLinkageDown();
+//        }
+//
+//        telemetry.addData("Linkage Encoder Position", robot.linkage.getCurrentPosition());
+//        telemetry.addData("Linkage Desired Position", robot.linkage.getTargetPosition());
+//        telemetry.addData("Linkage power", robot.linkage.getPower());
+//    }
 
     private void moveWrist() {
 //

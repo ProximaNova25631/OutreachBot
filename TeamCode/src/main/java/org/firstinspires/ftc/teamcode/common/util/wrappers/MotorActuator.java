@@ -21,7 +21,6 @@ public class MotorActuator {
     private double limit = 0.0;
 
     private boolean reached = false;
-    private ActuatorPositions positions = null;
 
     private Supplier<Object> topic;
 
@@ -118,14 +117,5 @@ public class MotorActuator {
 
     public double getTargetPosition() {
         return this.targetPosition;
-    }
-
-    public void setTargetPosition(Object key) {
-        targetPosition = positions.get(key);
-    }
-
-    public void setActuatorPositions(ActuatorPositions actuatorPositions) {
-        positions = actuatorPositions;
-        targetPosition = actuatorPositions.getDefaultValue();
     }
 }

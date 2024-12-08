@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeDownCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeUpCommand;
+import org.firstinspires.ftc.teamcode.common.hardware.Config;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
 @TeleOp
@@ -27,7 +28,7 @@ public class TeleopWithoutSliders extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(new IntakeUpCommand());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(new ClawCommand(RobotHardware.ClawPosition.OPEN));
+                .whenPressed(new ClawCommand(Config.CLAW_OPEN_POSITION));
     }
 
     @Override

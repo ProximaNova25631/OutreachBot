@@ -4,10 +4,10 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
-public class LinkageCommand extends InstantCommand {
-    public LinkageCommand(int position) {
+public class SlidesCommand extends InstantCommand {
+    public SlidesCommand(int position) {
         super(
-                ()-> RobotHardware.getInstance().linkage.setTargetPosition(position)
+                ()-> RobotHardware.getInstance().slides.setTargetPosition(position)
         );
     }
 }

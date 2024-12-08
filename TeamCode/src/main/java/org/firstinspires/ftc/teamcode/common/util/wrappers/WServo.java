@@ -12,6 +12,11 @@ public class WServo implements Servo {
         this.servo = servo;
     }
 
+    public WServo(Servo servo, Direction direction) {
+        this.servo = servo;
+        this.setDirection(direction);
+    }
+
     public void setOffset(double offset) {
         this.offset = offset;
     }
