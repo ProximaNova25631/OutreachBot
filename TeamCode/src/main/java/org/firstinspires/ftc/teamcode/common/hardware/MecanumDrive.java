@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 public class MecanumDrive {
     private static RobotHardware robot = RobotHardware.getInstance();
     private boolean useTrigonometric = false;
-    private double speedLimit = 10;
+    private double speedLimit = 1.0;
     private Telemetry telemetry;
 
     private double frontLeftPower = 0.0;
