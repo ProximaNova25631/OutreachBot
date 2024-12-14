@@ -6,13 +6,17 @@ import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 public class MecanumDrive {
     private static RobotHardware robot = RobotHardware.getInstance();
     private boolean useTrigonometric = false;
-    private double speedLimit = 1.0;
+    private double speedLimit = 10;
     private Telemetry telemetry;
 
     private double frontLeftPower = 0.0;
     private double frontRightPower = 0.0;
     private double backLeftPower = 0.0;
     private double backRightPower = 0.0;
+
+    public void setSpeedLimit(double speedLimit){
+        this.speedLimit = speedLimit;
+    }
 
     public MecanumDrive(boolean useTrigonometric, double speedLimit) {
         this.useTrigonometric = useTrigonometric;
