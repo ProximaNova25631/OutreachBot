@@ -23,7 +23,7 @@ public class Linkage {
     }
 
     public void write() {
-        if (Math.abs(tiltMotor.getCurrentPosition() - linkageTargetPosition) <= 10) {
+        if (Math.abs(tiltMotor.getCurrentPosition() - linkageTargetPosition) <= 20) {
             tiltMotor.setPower(0.0);
         } else {
             tiltMotor.setTargetPosition(linkageTargetPosition);

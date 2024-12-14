@@ -38,6 +38,6 @@ public class TeleopWithoutSliders extends CommandOpMode {
         robot.periodic();
         robot.write();
 
-        robot.mecanumDrive.robotCentric(-gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
+        robot.mecanumDrive.robotCentric(gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
     }
 }
