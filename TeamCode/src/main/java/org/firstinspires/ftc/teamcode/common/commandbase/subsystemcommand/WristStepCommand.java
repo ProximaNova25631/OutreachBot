@@ -4,10 +4,10 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 
-public class ClawCommand extends InstantCommand {
-    public ClawCommand(double position) {
+public class WristStepCommand extends InstantCommand {
+    public WristStepCommand(double step) {
         super(
-                ()-> RobotHardware.getInstance().clawActuator.setTargetPosition(position)
+                ()-> RobotHardware.getInstance().wristActuator.stepTargetPosition(step)
         );
     }
 }

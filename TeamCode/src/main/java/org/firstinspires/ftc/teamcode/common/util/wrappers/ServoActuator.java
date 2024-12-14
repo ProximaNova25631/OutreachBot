@@ -7,6 +7,8 @@ public class ServoActuator {
     private List<WServo> servoList = new ArrayList<>();
     private double prevTargetPosition = 0.0;
     private double targetPosition = 0.0;
+    private double minPosition = 0.0;
+    private double maxPosition = 1.0;
 
     public ServoActuator(WServo... servos) {
         for (WServo s : servos) {
@@ -29,5 +31,25 @@ public class ServoActuator {
 
     public double getTargetPosition() {
         return targetPosition;
+    }
+
+    public ServoActuator setMinPosition(double minPosition) {
+        this.minPosition = minPosition;
+        return this;
+    }
+
+    public ServoActuator setMaxPosition(double maxPosition) {
+        this.maxPosition = maxPosition;
+        return this;
+    }
+
+    public void stepTargetPosition(double step) {
+        targetPosition = prevTargetPosition + step;
+        if (targetPosition < minPosition) {
+            targetPosition = minPosition;
+        }
+        if (targetPosition > maxPosition) {
+            targetPosition = maxPosition;
+        }
     }
 }

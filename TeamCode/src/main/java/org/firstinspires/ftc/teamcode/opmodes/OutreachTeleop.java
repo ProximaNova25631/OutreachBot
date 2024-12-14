@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.LinkageCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.SlidesCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.WristStepCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeDownCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeUpCommand;
 import org.firstinspires.ftc.teamcode.common.hardware.Config;
@@ -55,6 +56,14 @@ public class OutreachTeleop extends CommandOpMode {
 
         robot.mecanumDrive.robotCentric(gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
 
+        if (gamepadEx2.getRightX() != 0) {
+            if (gamepadEx2.getRightX() > 0) {
+                robot.wristActuator.stepTargetPosition(0.02);
+            } else {
+                robot.wristActuator.stepTargetPosition(-0.02);
+            }
+        }
+
         telemetry.addData("Claw position", robot.clawActuator.getTargetPosition());
         telemetry.addData("Arm position", robot.armActuator.getTargetPosition());
         telemetry.addData("Elbow position", robot.elbowActuator.getTargetPosition());
@@ -67,10 +76,6 @@ public class OutreachTeleop extends CommandOpMode {
         telemetry.addData("Slides current position", robot.slides.getSliderCurrentPosition());
         telemetry.addData("Slides target position", robot.slides.getSliderTargetPosition());
         telemetry.addData("Slides current power", robot.slides.getSliderPower());
-
-//        telemetry.addData("Slider Desired", robot.slides.getSliderTargetPosition());
-//        telemetry.addData("Slider Power", robot.slides.getSliderPower());
-//        telemetry.addData("ZeroPowerBehavior", robot.slides.sliderMotor2.getZeroPowerBehavior());
 
         telemetry.update();
     }
