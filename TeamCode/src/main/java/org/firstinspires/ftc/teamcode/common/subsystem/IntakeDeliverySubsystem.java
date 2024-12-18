@@ -28,4 +28,20 @@ public class IntakeDeliverySubsystem extends SubsystemCore {
     @Override
     public void reset() {
     }
+
+    public void stepArmElbowActuators(double step) {
+        if (step > 0.0) {
+            if (robot.armActuator.getPrevTargetPosition() + step > robot.armActuator.getMaxPosition()) {
+                robot.elbowActuator.stepTargetPosition(step);
+            } else {
+                robot.armActuator.stepTargetPosition(step);
+            }
+        } else if (step < 0.0) {
+            if (robot.elbowActuator.getPrevTargetPosition() + step < robot.elbowActuator.getMinPosition()) {
+                robot.armActuator.stepTargetPosition(step);
+            } else {
+                robot.elbowActuator.stepTargetPosition(step);
+            }
+        }
+    }
 }

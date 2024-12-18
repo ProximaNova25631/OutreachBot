@@ -21,9 +21,9 @@ public final class Config {
     public static final double CLAW_OPEN_POSITION = 0.35;
     public static final double CLAW_CLOSED_POSITION = 0.55;
 
-    public static final double ELBOW_UP_POSITION = 0.35;
+    public static final double ELBOW_UP_POSITION = 0.65;
     public static final double ELBOW_MID_POSITION = 0.35;
-    public static final double ELBOW_DOWN_POSITION = 0.10;
+    public static final double ELBOW_DOWN_POSITION = 0.95;
 
     public static final int TILT_UP_POSITION = 970;
     public static final int TILT_DOWN_POSITION = 0;

@@ -33,6 +33,10 @@ public class ServoActuator {
         return targetPosition;
     }
 
+    public double getPrevTargetPosition() {
+        return prevTargetPosition;
+    }
+
     public ServoActuator setMinPosition(double minPosition) {
         this.minPosition = minPosition;
         return this;
@@ -41,6 +45,14 @@ public class ServoActuator {
     public ServoActuator setMaxPosition(double maxPosition) {
         this.maxPosition = maxPosition;
         return this;
+    }
+
+    public double getMinPosition() {
+        return this.minPosition;
+    }
+
+    public double getMaxPosition() {
+        return this.maxPosition;
     }
 
     public void stepTargetPosition(double step) {

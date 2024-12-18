@@ -26,7 +26,7 @@ public class RobotHardware {
     public Slides slides;
 
     public IntakeDeliverySubsystem intakeDeliverySubsystem;
-    public final MecanumDrive mecanumDrive = new MecanumDrive(true, 0.75);
+    public static final MecanumDrive mecanumDrive = new MecanumDrive(true, 0.75);
 
     public static RobotHardware getInstance() {
         if (instance == null) {
@@ -52,9 +52,13 @@ public class RobotHardware {
         slides = new Slides();
         slides.init(hardwareMap);
 
-        armActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.LEFT_ARM)));
+        armActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.LEFT_ARM)))
+                .setMinPosition(0.0)
+                .setMaxPosition(0.6);
         //        new WServo(hardwareMap.get(Servo.class, Config.RIGHT_ARM), Servo.Direction.REVERSE)
-        elbowActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.ELBOW)));
+        elbowActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.ELBOW), Servo.Direction.REVERSE))
+                .setMinPosition(Config.ELBOW_MID_POSITION)
+                .setMaxPosition(Config.ELBOW_DOWN_POSITION);
         clawActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.CLAW)));
         wristActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.WRIST)));
 

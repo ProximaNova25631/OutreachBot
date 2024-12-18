@@ -62,17 +62,17 @@ public class OutreachTeleop extends CommandOpMode {
 
         if (gamepadEx2.getRightX() != 0) {
             if (gamepadEx2.getRightX() > 0) {
-                robot.wristActuator.stepTargetPosition(0.02);
-            } else {
                 robot.wristActuator.stepTargetPosition(-0.02);
+            } else {
+                robot.wristActuator.stepTargetPosition(0.02);
             }
         }
 
         if (gamepadEx2.getLeftY() != 0) {
             if (gamepadEx2.getLeftY() > 0) {
-                robot.armActuator.stepTargetPosition(0.01);
+                robot.intakeDeliverySubsystem.stepArmElbowActuators(0.01);
             } else {
-                robot.armActuator.stepTargetPosition(-0.01);
+                robot.intakeDeliverySubsystem.stepArmElbowActuators(-0.01);
             }
         }
 
