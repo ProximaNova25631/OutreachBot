@@ -26,7 +26,7 @@ public class RobotHardware {
     public Slides slides;
 
     public IntakeDeliverySubsystem intakeDeliverySubsystem;
-    public static final MecanumDrive mecanumDrive = new MecanumDrive(true, 0.75);
+    public static final MecanumDrive mecanumDrive = new MecanumDrive(true, 1.0);
 
     public static RobotHardware getInstance() {
         if (instance == null) {
@@ -46,6 +46,11 @@ public class RobotHardware {
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         linkage = new Linkage();
         linkage.init(hardwareMap);

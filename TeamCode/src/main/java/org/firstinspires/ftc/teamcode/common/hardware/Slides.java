@@ -40,8 +40,13 @@ public class Slides {
 
     public void write() {
         if (Math.abs(sliderTargetPosition - sliderMotor1.getCurrentPosition()) <= 40) {
-            sliderMotor1.setPower(0.0);
-            sliderMotor2.setPower(0.0);
+            if (sliderTargetPosition == Config.SLIDER_TOP_POSITION) {
+                sliderMotor1.setPower(0.2);
+                sliderMotor2.setPower(0.2);
+            } else {
+                sliderMotor1.setPower(0.0);
+                sliderMotor2.setPower(0.0);
+            }
         } else {
             sliderMotor1.setTargetPosition(sliderTargetPosition);
             sliderMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);

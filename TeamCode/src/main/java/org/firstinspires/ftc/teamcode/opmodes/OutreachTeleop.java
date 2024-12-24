@@ -8,11 +8,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.LinkageCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.SlidesCommand;
-import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.WristStepCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.DeliveryUpCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeDownCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeUpCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.DeliveryDownCommand;
 import org.firstinspires.ftc.teamcode.common.hardware.Config;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
+import org.firstinspires.ftc.teamcode.common.util.joystick.Util;
 
 @TeleOp
 public class OutreachTeleop extends CommandOpMode {
@@ -37,10 +39,10 @@ public class OutreachTeleop extends CommandOpMode {
                 .whenPressed(new ClawCommand(Config.CLAW_OPEN_POSITION));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(new ClawCommand(Config.CLAW_CLOSED_POSITION));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new LinkageCommand(Config.TILT_UP_POSITION));
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(new LinkageCommand(Config.TILT_DOWN_POSITION));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(new DeliveryUpCommand());
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(new DeliveryDownCommand());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new SlidesCommand(Config.SLIDER_TOP_POSITION));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
@@ -58,7 +60,8 @@ public class OutreachTeleop extends CommandOpMode {
         robot.periodic();
         robot.write();
 
-        robot.mecanumDrive.robotCentric(gamepadEx1.getLeftY(), gamepadEx1.getLeftX(), gamepadEx1.getRightX());
+        robot.mecanumDrive.robotCentric(gamepadEx1.getLeftY(), gamepadEx1.getLeftX(),
+                Util.joystickScalar(-gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) + gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER), 0.01));
 
         if (gamepadEx2.getRightX() != 0) {
             if (gamepadEx2.getRightX() > 0) {

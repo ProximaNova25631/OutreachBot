@@ -14,7 +14,7 @@ public final class Config {
     public static final String SLIDER_MOTOR_2 = "slidesMotor2";
     public static final String TILT_MOTOR = "TiltMotor";
 
-    public static final double ARM_UP_POSITION = 0.3;
+    public static final double ARM_UP_POSITION = 0.42;
     public static final double ARM_DOWN_POSITION = 0.50;
     public static final double ARM_DOWN_GRAB_POSITION = 0.65;
 
