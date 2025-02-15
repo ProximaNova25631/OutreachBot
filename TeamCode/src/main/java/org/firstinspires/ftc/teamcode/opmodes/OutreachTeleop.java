@@ -39,18 +39,15 @@ public class OutreachTeleop extends CommandOpMode {
                 .whenPressed(new ClawCommand(Config.CLAW_OPEN_POSITION));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(new ClawCommand(Config.CLAW_CLOSED_POSITION));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(new DeliveryUpCommand());
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(new DeliveryDownCommand());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new SlidesCommand(Config.SLIDER_TOP_POSITION));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(new SlidesCommand(Config.SLIDER_CLOSE_INTAKE_POSITION));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(new ClawCommand(Config.CLAW_CLOSED_POSITION));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new ClawCommand(Config.CLAW_OPEN_POSITION));
+
     }
 
     @Override
@@ -63,16 +60,16 @@ public class OutreachTeleop extends CommandOpMode {
         robot.mecanumDrive.robotCentric(gamepadEx1.getLeftY(), gamepadEx1.getLeftX(),
                 Util.joystickScalar(-gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) + gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER), 0.01));
 
-        if (gamepadEx2.getRightX() != 0) {
-            if (gamepadEx2.getRightX() > 0) {
-                robot.wristActuator.stepTargetPosition(-0.02);
+        if (Math.abs(gamepadEx1.getRightX()) > 0.1) {
+            if (gamepadEx1.getRightX() > 0) {
+                robot.wristActuator.stepTargetPosition(-0.015);
             } else {
-                robot.wristActuator.stepTargetPosition(0.02);
+                robot.wristActuator.stepTargetPosition(0.015);
             }
         }
 
-        if (gamepadEx2.getLeftY() != 0) {
-            if (gamepadEx2.getLeftY() > 0) {
+        if (Math.abs(gamepadEx1.getRightY()) > 0.5) {
+            if (gamepadEx1.getRightY() > 0) {
                 robot.intakeDeliverySubsystem.stepArmElbowActuators(0.01);
             } else {
                 robot.intakeDeliverySubsystem.stepArmElbowActuators(-0.01);
@@ -91,6 +88,8 @@ public class OutreachTeleop extends CommandOpMode {
         telemetry.addData("Slides current position", robot.slides.getSliderCurrentPosition());
         telemetry.addData("Slides target position", robot.slides.getSliderTargetPosition());
         telemetry.addData("Slides current power", robot.slides.getSliderPower());
+        telemetry.addData("Wrist Position", robot.wristActuator.getTargetPosition());
+
 
         telemetry.update();
     }

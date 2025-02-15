@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.common.hardware;
 
 public final class Config {
+    public static final String SPARK_FUN_ODOMETRY = "odometry";
     public static final String FRONT_LEFT_MOTOR = "frontLeftMotor";
     public static final String FRONT_RIGHT_MOTOR = "frontRightMotor";
     public static final String BACK_LEFT_MOTOR = "backLeftMotor";
@@ -13,13 +14,13 @@ public final class Config {
     public static final String SLIDER_MOTOR_1 = "slidesMotor1";
     public static final String SLIDER_MOTOR_2 = "slidesMotor2";
     public static final String TILT_MOTOR = "TiltMotor";
-
+    public static final double WRIST_INIT_POS = 0.5;
     public static final double ARM_UP_POSITION = 0.42;
     public static final double ARM_DOWN_POSITION = 0.50;
-    public static final double ARM_DOWN_GRAB_POSITION = 0.65;
+    public static final double ARM_DOWN_GRAB_POSITION = 0.62;
 
     public static final double CLAW_OPEN_POSITION = 0.35;
-    public static final double CLAW_CLOSED_POSITION = 0.55;
+    public static final double CLAW_CLOSED_POSITION = 0.62;
 
     public static final double ELBOW_UP_POSITION = 0.65;
     public static final double ELBOW_MID_POSITION = 0.35;

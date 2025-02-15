@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServoActuator {
+    public Object getTargetPosition;
     private List<WServo> servoList = new ArrayList<>();
     private double prevTargetPosition = 0.0;
     private double targetPosition = 0.0;
