@@ -21,7 +21,7 @@ public class TeleopWithoutSliders extends CommandOpMode {
     public void initialize() {
         gamepadEx1 = new GamepadEx(gamepad1);
         robot.init(hardwareMap);
-        robot.mecanumDrive.setSpeedLimit(0.25);
+        robot.mecanumDrive.setSpeedLimit(0.50);
 
         // Set up commands to execute from gamepad controllers
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
