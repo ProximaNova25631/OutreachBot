@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.LinkageCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.SlidesCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.ClipDeliveryCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.ClipIntakeCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.ClipPrepCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.DeliveryUpCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeDownCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.teleopcommand.IntakeUpCommand;
@@ -47,7 +50,20 @@ public class OutreachTeleop extends CommandOpMode {
                 .whenPressed(new SlidesCommand(Config.SLIDER_TOP_POSITION));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(new SlidesCommand(Config.SLIDER_CLOSE_INTAKE_POSITION));
+<<<<<<< HEAD
 
+=======
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(new ClawCommand(Config.CLAW_CLOSED_POSITION));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(new ClawCommand(Config.CLAW_OPEN_POSITION));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(new ClipPrepCommand());
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new ClipIntakeCommand());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(new ClipDeliveryCommand());
+>>>>>>> 78a35419b0e554bc5686b91cddb94ee92a856ad2
     }
 
     @Override
@@ -57,6 +73,7 @@ public class OutreachTeleop extends CommandOpMode {
         robot.periodic();
         robot.write();
 
+        robot.mecanumDrive.setSpeedLimit(1.0);
         robot.mecanumDrive.robotCentric(gamepadEx1.getLeftY(), gamepadEx1.getLeftX(),
                 Util.joystickScalar(-gamepadEx1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) + gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER), 0.01));
 
