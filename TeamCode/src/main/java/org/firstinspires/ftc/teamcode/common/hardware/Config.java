@@ -17,18 +17,11 @@ public final class Config {
     public static final double WRIST_INIT_POS = 0.5;
     public static final double ARM_UP_POSITION = 0.42;
     public static final double ARM_DOWN_POSITION = 0.50;
-<<<<<<< HEAD
     public static final double ARM_DOWN_GRAB_POSITION = 0.62;
-
-    public static final double CLAW_OPEN_POSITION = 0.35;
-    public static final double CLAW_CLOSED_POSITION = 0.62;
-=======
-    public static final double ARM_DOWN_GRAB_POSITION = 0.70;
     public static final double ARM_WALL_INTAKE_POSITION = 0.20;
 
     public static final double CLAW_OPEN_POSITION = 0.35;
-    public static final double CLAW_CLOSED_POSITION = 0.65;
->>>>>>> 78a35419b0e554bc5686b91cddb94ee92a856ad2
+    public static final double CLAW_CLOSED_POSITION = 0.62;
 
     public static final double ELBOW_UP_POSITION = 0.65;
     public static final double ELBOW_MID_POSITION = 0.35;

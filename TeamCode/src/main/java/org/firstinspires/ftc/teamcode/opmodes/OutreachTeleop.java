@@ -50,9 +50,7 @@ public class OutreachTeleop extends CommandOpMode {
                 .whenPressed(new SlidesCommand(Config.SLIDER_TOP_POSITION));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(new SlidesCommand(Config.SLIDER_CLOSE_INTAKE_POSITION));
-<<<<<<< HEAD
 
-=======
         gamepadEx2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(new ClawCommand(Config.CLAW_CLOSED_POSITION));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
@@ -63,7 +61,6 @@ public class OutreachTeleop extends CommandOpMode {
                 .whenPressed(new ClipIntakeCommand());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new ClipDeliveryCommand());
->>>>>>> 78a35419b0e554bc5686b91cddb94ee92a856ad2
     }
 
     @Override
