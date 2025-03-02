@@ -55,12 +55,13 @@ public class OutreachTeleop extends CommandOpMode {
                 .whenPressed(new ClawCommand(Config.CLAW_CLOSED_POSITION));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(new ClawCommand(Config.CLAW_OPEN_POSITION));
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.A)
+
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(new ClipPrepCommand());
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new ClipIntakeCommand());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new ClipDeliveryCommand());
+                .whenPressed(new ClipIntakeCommand());
+//        gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
+//                .whenPressed(new ClipDeliveryCommand());
     }
 
     @Override

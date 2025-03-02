@@ -21,9 +21,9 @@ public class IntakeUpCommand extends SequentialCommandGroup {
                 new ElbowCommand(Config.ELBOW_UP_POSITION),
                 new ArmCommand(Config.ARM_UP_POSITION),
                 new WaitCommand(500),
-                new SlidesCommand(Config.SLIDER_BOTTOM_POSITION),
-                new WaitCommand(500),
-                new LinkageCommand(Config.TILT_UP_POSITION)
+                new SlidesCommand(Config.SLIDER_BOTTOM_POSITION)
+//                new WaitCommand(500),
+//                new LinkageCommand(Config.TILT_UP_POSITION)
         );
     }
 }

@@ -17,8 +17,6 @@ public class DeliveryUpCommand extends SequentialCommandGroup {
                 new WaitCommand(500),
                 new LinkageCommand(Config.TILT_UP_POSITION),
                 new WaitCommand(500),
-                new LinkageCommand(Config.TILT_UP_POSITION),
-                new WaitCommand(500),
                 new InstantCommand(() -> RobotHardware.getInstance().wristActuator.setTargetPosition(Config.WRIST_INIT_POS))
 //                new WristStepCommand(Config.WRIST_INIT_POS)
         );

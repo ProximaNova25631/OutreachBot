@@ -21,7 +21,7 @@ public final class Config {
     public static final double ARM_WALL_INTAKE_POSITION = 0.20;
 
     public static final double CLAW_OPEN_POSITION = 0.35;
-    public static final double CLAW_CLOSED_POSITION = 0.62;
+    public static final double CLAW_CLOSED_POSITION = 0.65;
 
     public static final double ELBOW_UP_POSITION = 0.65;
     public static final double ELBOW_MID_POSITION = 0.35;
