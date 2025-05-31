@@ -1,97 +1,52 @@
-package org.firstinspires.ftc.teamcode.common.hardware;
-import com.arcrobotics.ftclib.kinematics.Odometry;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.common.Odometry.SparkFunOdometry;
-import org.firstinspires.ftc.teamcode.common.subsystem.IntakeDeliverySubsystem;
-import org.firstinspires.ftc.teamcode.common.util.wrappers.ServoActuator;
-import org.firstinspires.ftc.teamcode.common.util.wrappers.WServo;
-
-public class RobotHardware {
-    private static RobotHardware instance = null;
-
-    public DcMotor frontLeftMotor;
-    public DcMotor frontRightMotor;
-    public DcMotor backLeftMotor;
-    public DcMotor backRightMotor;
-
-    public ServoActuator armActuator;
-    public ServoActuator elbowActuator;
-    public ServoActuator clawActuator;
-    public ServoActuator wristActuator;
-
-    public Linkage linkage;
-    public Slides slides;
-//    public SparkFunOdometry SparkFunOdometry;
-
-    public IntakeDeliverySubsystem intakeDeliverySubsystem;
-    public static final MecanumDrive mecanumDrive = new MecanumDrive(true, 1.0);
-
-    public static RobotHardware getInstance() {
-        if (instance == null) {
-            instance = new RobotHardware();
-        }
-
-        return instance;
-    }
-
-    public void init(HardwareMap hardwareMap) {
-//        SparkFunOdometry = hardwareMap.get(SparkFunOdometry.class, Config.SPARK_FUN_ODOMETRY);
-        frontLeftMotor = hardwareMap.dcMotor.get(Config.FRONT_LEFT_MOTOR);
-        frontRightMotor = hardwareMap.dcMotor.get(Config.FRONT_RIGHT_MOTOR);
-        backLeftMotor = hardwareMap.dcMotor.get(Config.BACK_LEFT_MOTOR);
-        backRightMotor = hardwareMap.dcMotor.get(Config.BACK_RIGHT_MOTOR);
-
-        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        linkage = new Linkage();
-        linkage.init(hardwareMap);
-        slides = new Slides();
-        slides.init(hardwareMap);
-
-        armActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.LEFT_ARM)))
-                .setMinPosition(0.0)
-                .setMaxPosition(0.6);
-        //        new WServo(hardwareMap.get(Servo.class, Config.RIGHT_ARM), Servo.Direction.REVERSE)
-        elbowActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.ELBOW), Servo.Direction.REVERSE))
-                .setMinPosition(Config.ELBOW_MID_POSITION)
-                .setMaxPosition(Config.ELBOW_DOWN_POSITION);
-        clawActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.CLAW)));
-        wristActuator = new ServoActuator(new WServo(hardwareMap.get(Servo.class, Config.WRIST)));
-
-        armActuator.setTargetPosition(Config.ARM_UP_POSITION);
-        elbowActuator.setTargetPosition(Config.ELBOW_UP_POSITION);
-        clawActuator.setTargetPosition(Config.CLAW_OPEN_POSITION);
-        wristActuator.setTargetPosition(Config.WRIST_INIT_POS);
-        intakeDeliverySubsystem = new IntakeDeliverySubsystem();
-        intakeDeliverySubsystem.write();
-    }
-
-    public void read() {
-    }
-
-    public void write() {
-        mecanumDrive.write();
-        intakeDeliverySubsystem.write();
-    }
-
-    public void periodic() {
-        intakeDeliverySubsystem.periodic();
-    }
-}
-
+//package org.firstinspires.ftc.teamcode.common.hardware;
+//import com.arcrobotics.ftclib.kinematics.Odometry;
+//import com.qualcomm.robotcore.hardware.DcMotor;
+//import com.qualcomm.robotcore.hardware.DcMotorSimple;
+//import com.qualcomm.robotcore.hardware.HardwareMap;
+//import com.qualcomm.robotcore.hardware.Servo;
+//import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+//
+//import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+//import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+//import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+//import org.firstinspires.ftc.teamcode.common.Odometry.SparkFunOdometry;
+//import org.firstinspires.ftc.teamcode.common.subsystem.IntakeDeliverySubsystem;
+//import org.firstinspires.ftc.teamcode.common.util.wrappers.ServoActuator;
+//import org.firstinspires.ftc.teamcode.common.util.wrappers.WServo;
+//
+//public class RobotHardware {
+//    private static RobotHardware instance = null;
+//
+//    public DcMotor frontLeftMotor;
+//    public DcMotor frontRightMotor;
+//    public DcMotor backLeftMotor;
+//    public DcMotor backRightMotor;
+//
+//    public ServoActuator armActuator;
+//    public ServoActuator elbowActuator;
+//    public ServoActuator clawActuator;
+//    public ServoActuator wristActuator;
+//
+//    public Slides slides;
+////    public SparkFunOdometry SparkFunOdometry;
+//
+//    public static RobotHardware getInstance() {
+//        if (instance == null) {
+//            instance = new RobotHardware();
+//        }
+//
+//        return instance;
+//    }
+//
+//    public void init(HardwareMap hardwareMap) {
+////        SparkFunOdometry = hardwareMap.get(SparkFunOdometry.class, Config.SPARK_FUN_ODOMETRY);
+//
+//        slides = new Slides();
+//        slides.init(hardwareMap);
+//
+//
+//    }
+//
+//
+//}
+//

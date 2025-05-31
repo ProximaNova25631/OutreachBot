@@ -104,6 +104,9 @@ public class MotorActuator {
     public void setTargetPosition(double targetPosition) {
         this.targetPosition = Math.min(targetPosition, limit);
     }
+    public void updatePIDCoefficients(double p, double i, double d) {
+        this.controller.setPID(p, 0, d);
+    }
 
     public boolean hasReached() {return this.reached;}
 
